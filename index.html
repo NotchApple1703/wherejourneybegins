@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Oxalis - Phong Nha Kẻ Bàng</title>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        >
+
+        <style>
+            /* --- GLOBAL RESET --- */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                font-family: "Montserrat", sans-serif;
+                background-color: #ffffff;
+                color: #333;
+                overflow-x: hidden;
+            }
+            a {
+                text-decoration: none;
+                color: inherit;
+                transition: 0.3s;
+            }
+            ul {
+                list-style: none;
+            }
+
+            /* --- NAVBAR (Frosted Glass & Light Theme) --- */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 30px 50px;
+                z-index: 1000;
+                /* Frosted Effect */
+                background: rgba(0, 0, 0, 0.4);
+                backdrop-filter: blur(4px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                transition: all 0.4s ease;
+            }
+
+            .navbar.scrolled {
+                background: rgba(255, 255, 255, 0.95);
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+                padding: 15px 50px;
+            }
+
+            /* Logo Image Button */
+            .nav-logo-img {
+                width: 120px; /* Adjust size as needed */
+                height: auto;
+                display: block; /* Remove extra space below image */
+            }
+
+            .nav-menu {
+                display: flex;
+                gap: 40px;
+            }
+
+            .nav-item {
+                position: relative;
+                font-size: 14px;
+                font-weight: 600;
+                text-transform: uppercase;
+                cursor: pointer;
+                padding: 10px 0;
+                color: #fff;;
+            }
+
+            /* Switch colors on scroll */
+            .navbar.scrolled .nav-logo-img, .navbar.scrolled .nav-item {
+                filter: invert(0%); /* Ensure original logo color if needed, or adjust */
+                color: #222; /* For text menu items */
+            }
+            /* If you want logo to become black when scrolled: */
+            /* .navbar.scrolled .nav-logo { filter: invert(100%); } */
+
+            .nav-item::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background-color: #fff;
+                transition: width 0.3s ease;
+            }
+            .navbar.scrolled .nav-item::after {
+                background-color: #222;
+            }
+            .nav-item:hover::after {
+                width: 100%;
+            }
+
+            /* Dropdown (Light Theme) */
+            .dropdown {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                background-color: #ffffff;
+                min-width: 220px;
+                padding: 15px 0;
+                border-radius: 6px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                border: 1px solid #f0f0f0;
+            }
+            .dropdown::before {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-bottom: 6px solid #fff;
+            }
+            .nav-item:hover .dropdown {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(10px);
+            }
+            .dropdown li a {
+                display: block;
+                padding: 12px 25px;
+                font-size: 14px;
+                color: #000;
+                font-weight: 500;
+            }
+            .dropdown li a:hover {
+                color: #000;
+                background-color: #f5f5f5;
+            }
+
+            /* CTA Button */
+            .btn-cta {
+                border: 1px solid #fff;
+                padding: 10px 25px;
+                border-radius: 30px;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                background: transparent;
+                color: #fff;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .btn-cta:hover {
+                background-color: #fff;
+                color: #000;
+            }
+            .navbar.scrolled .btn-cta {
+                border-color: #222;
+                color: #222;
+            }
+            .navbar.scrolled .btn-cta:hover {
+                background-color: #222;
+                color: #fff;
+            }
+
+            /* --- HERO SECTION LAYOUT --- */
+            .hero-section {
+                display: flex;
+                height: 100vh;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            /* --- LEFT SIDE (55%) --- */
+            .hero-left {
+                flex-basis: 55%;
+                position: relative;
+                background-image: url("https://i.pinimg.com/originals/ef/cd/b7/efcdb703dad62731392758f52208643e.jpg"); /* Placeholder for Phong Nha landscape */
+                background-size: cover;
+                background-position: center;
+            }
+            .overlay-left {
+                position: absolute;
+                top: 40px;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 0, 0, 0.4),
+                    transparent
+                );
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-left: 80px;
+                padding-right: 40px;
+            }
+            .hero-title {
+                line-height: 1.15; /* Spacing for tone marks */
+                font-size: 6.5rem;
+                font-weight: 900;
+                text-transform: uppercase;
+                color: #ffffff;
+                margin-bottom: 25px;
+                text-shadow: 10px 10px 30px rgba(0, 0, 0, 0.7);
+                letter-spacing: -2px;
+                mix-blend-mode: hard-light;
+                color: rgba(200, 200, 200, 0.9);
+            }
+            .hero-desc {
+                max-width: 450px;
+                font-size: 1.1rem;
+                line-height: 1.6;
+                font-weight: 400;
+                color: #f0f0f0;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            }
+
+            /* --- RIGHT SIDE (45%) - ADAPTED CSS --- */
+            .accordion-container {
+                flex-basis: 45%; /* Use flex-basis instead of width for layout safety */
+                height: 100%;
+                display: flex;
+                z-index: 10;
+                background: #000; /* Fallback */
+            }
+
+            .accordion-card {
+                flex: 1;
+                height: 100%;
+                position: relative;
+                overflow: hidden;
+                transition: flex 0.8s
+                    cubic-bezier(
+                        0.25,
+                        1,
+                        0.5,
+                        1
+                    ); /* Slower, smoother transition */
+                cursor: pointer;
+                background-size: cover;
+                background-position: center;
+                border-left: 1px solid white;
+            }
+
+            /* Shadow Layer via Pseudo-element */
+            .accordion-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                /* Strong inset shadow for black blend edges */
+                box-shadow: inset 0 0 80px 80px rgba(0, 0, 0, 0.6);
+                z-index: 1;
+                pointer-events: none;
+                transition: opacity 0.5s ease;
+            }
+
+            /* Gradient Overlay for Readability */
+            .accordion-card::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    to bottom,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.1) 50%,
+                    rgba(0, 0, 0, 0.8) 100%
+                );
+                z-index: 1;
+                pointer-events: none;
+            }
+
+            /* Card Images */
+            .accordion-card:nth-child(1) {
+                background-image: url("https://i.pinimg.com/originals/0b/f8/00/0bf8005251b8d5f4a1d62829954cbde8.jpg"); /* Sơn Đoòng Placeholder */
+            }
+            .accordion-card:nth-child(2) {
+                background-image: url("https://www.elle.vn/app/uploads/2022/09/10/494585/Tu-Lan-hang-song-oxalis-scaled.jpg"); /* Tú Làn Placeholder */
+            }
+            .accordion-card:nth-child(3) {
+                background-image: url("https://image.dnevnik.hr/media/images/1536xX/Feb2019/61642937.jpg"); /* Hang Én Placeholder */
+            }
+
+            /* Hover Interaction: Expand */
+            .accordion-card:hover {
+                flex: 3;
+            }
+
+            /* Lighten shadow on hover */
+            .accordion-card:hover::before {
+                opacity: 0.5;
+            }
+
+            .card-overlay {
+                z-index: 2;
+                position: relative;
+                height: 100%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end; /* Align bottom */
+                align-items: center;
+                padding-bottom: 60px;
+            }
+
+            /* Vertical Text (Initial State) */
+            .vertical-text {
+                position: absolute;
+                bottom: 50%;
+                left: 50%;
+                transform: translate(-50%, 50%) rotate(-90deg);
+                white-space: nowrap;
+                text-transform: uppercase;
+
+                /* Adapted: Smaller and Always White */
+                font-size: 2rem; /* Small */
+                font-weight: 700;
+                letter-spacing: 4px;
+                color: #ffffff; /* Always White */
+
+                opacity: 1;
+                transition: opacity 0.4s ease;
+                text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+                pointer-events: none;
+            }
+
+            .accordion-card:hover .vertical-text {
+                opacity: 0; /* Hide vertical text on expand */
+            }
+
+            /* Detailed Info (Revealed on Hover) */
+            .card-info {
+                opacity: 0;
+                transform: translateY(30px);
+                text-align: center;
+                transition: all 0.5s ease 0.15s; /* Smooth delay */
+                width: 100%;
+                padding: 0 1rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .accordion-card:hover .card-info {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .card-info h3 {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+                line-height: 1;
+                text-transform: uppercase;
+                font-weight: 800;
+                color: #fff;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            }
+
+            .card-info p {
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+                color: rgba(255, 255, 255, 0.9);
+                font-weight: 400;
+            }
+
+            .btn-explore {
+                padding: 10px 24px;
+                background: rgba(255, 255, 255, 0.15);
+                border: 1px solid rgba(255, 255, 255, 0.8);
+                color: white;
+                text-transform: uppercase;
+                font-weight: 600;
+                font-size: 11px;
+                letter-spacing: 1px;
+                backdrop-filter: blur(4px);
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .btn-explore:hover {
+                background: white;
+                color: black;
+                border-color: white;
+            }
+
+            /* --- RESPONSIVE --- */
+            @media (max-width: 1024px) {
+                .hero-title {
+                    font-size: 4.5rem;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .hero-section {
+                    flex-direction: column;
+                    height: auto;
+                }
+                .hero-left {
+                    height: 60vh;
+                    width: 100%;
+                    flex-basis: auto;
+                    padding-top: 60px;
+                }
+                .accordion-container {
+                    height: 60vh;
+                    width: 100%;
+                    flex-basis: auto;
+                }
+                .navbar {
+                    padding: 15px 20px;
+                }
+                .nav-menu {
+                    display: none;
+                }
+                .hero-title {
+                    font-size: 3rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- NAVBAR -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-left">
+                <a href="#">
+                    <img
+                        src="https://oxalisadventure.com/images/logo-oxalis-white.svg"
+                        alt="Oxalis Logo"
+                        class="nav-logo-img"
+                    >
+                </a>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    Hang động
+                    <ul class="dropdown">
+                        <li><a href="#">Hang Sơn Đoòng</a></li>
+                        <li><a href="#">Hang Tú Làn</a></li>
+                        <li><a href="#">Hang Én</a></li>
+                        <li><a href="#">Hang Ba</a></li>
+                        <li><a href="#">Hang Va</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    An toàn
+                    <ul class="dropdown">
+                        <li><a href="safety.html">Quản lý an toàn</a></li>
+                        <li><a href="equipment.html">Thiết bị đi tour</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    Hữu ích
+                    <ul class="dropdown">
+                        <!-- LINK TO NEW GUIDE FILE -->
+                        <li><a href="guide.html">Hướng dẫn đi, đến Phong Nha</a></li>
+                        <li><a href="faqs.html">Giải đáp thắc mắc</a></li>
+                        <li><a href="contact.html">Thông tin liên hệ</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="nav-right">
+                <button class="btn-cta">Đặt tour ngay</button>
+            </div>
+        </nav>
+
+        <!-- HERO SECTION -->
+        <div class="hero-section">
+            <!-- Left Side: Static -->
+            <div class="hero-left">
+                <div class="overlay-left">
+                    <h1 class="hero-title">PHONG<br>NHA<br>KẺ BÀNG</h1>
+                    <p class="hero-desc">
+                        Vương quốc hang động - Tuyệt tác thiên nhiên giữa lòng
+                        di sản. Khám phá hệ thống hang động tráng lệ nhất thế
+                        giới tại Quảng Bình, Việt Nam.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Side: Accordion -->
+            <div class="accordion-container">
+                <!-- Card 1 -->
+                <div class="accordion-card">
+                    <div class="card-overlay">
+                        <div class="vertical-text">SƠN ĐOÒNG</div>
+                        <div class="card-info">
+                            <h3>Sơn Đoòng</h3>
+                            <p>4 Ngày / 3 Đêm</p>
+                            <button class="btn-explore">Khám phá</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="accordion-card">
+                    <div class="card-overlay">
+                        <div class="vertical-text">TÚ LÀN</div>
+                        <div class="card-info">
+                            <h3>Tú Làn</h3>
+                            <p>2 Ngày / 1 Đêm</p>
+                            <button class="btn-explore">Khám phá</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="accordion-card">
+                    <div class="card-overlay">
+                        <div class="vertical-text">HANG ÉN</div>
+                        <div class="card-info">
+                            <h3>Hang Én</h3>
+                            <p>2 Ngày / 1 Đêm</p>
+                            <button class="btn-explore">Khám phá</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Effect Script -->
+        <script>
+            const navbar = document.getElementById("navbar");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            });
+        </script>
+    </body>
+</html>

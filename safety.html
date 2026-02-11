@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quản lý an toàn - Oxalis Adventure</title>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        >
+
+        <style>
+            /* --- GLOBAL RESET & SHARED STYLES --- */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+                scroll-padding-top: 130px;
+            }
+
+            body {
+                font-family: "Montserrat", sans-serif;
+                background-color: #fcfcfc;
+                color: #333;
+                overflow-x: hidden;
+                line-height: 1.7;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            a {
+                text-decoration: none;
+                color: inherit;
+                transition: 0.3s;
+            }
+            ul {
+                list-style: none;
+            }
+
+            /* --- NAVBAR --- */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 30px 50px;
+                z-index: 1000;
+                background: rgba(0, 0, 0, 0.4);
+                backdrop-filter: blur(4px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                transition: all 0.4s ease;
+            }
+            .navbar.scrolled {
+                background: rgba(255, 255, 255, 0.95);
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+                padding: 15px 50px;
+            }
+            .nav-logo-img {
+                width: 120px;
+                height: auto;
+                display: block;
+            }
+            .nav-menu {
+                display: flex;
+                gap: 40px;
+            }
+            .nav-item {
+                position: relative;
+                font-size: 14px;
+                font-weight: 600;
+                text-transform: uppercase;
+                cursor: pointer;
+                padding: 10px 0;
+                color: #fff;
+            }
+            .navbar.scrolled .nav-logo-img {
+                filter: invert(100%);
+            }
+            .navbar.scrolled .nav-item {
+                color: #222;
+            }
+
+            .nav-item::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background-color: #fff;
+                transition: width 0.3s ease;
+            }
+            .navbar.scrolled .nav-item::after {
+                background-color: #222;
+            }
+            .nav-item:hover::after {
+                width: 100%;
+            }
+
+            /* Dropdown */
+            .dropdown {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                background-color: #ffffff;
+                min-width: 220px;
+                padding: 15px 0;
+                border-radius: 6px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                border: 1px solid #f0f0f0;
+            }
+            .dropdown::before {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-bottom: 6px solid #fff;
+            }
+            .nav-item:hover .dropdown {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(10px);
+            }
+            .dropdown li a {
+                display: block;
+                padding: 12px 25px;
+                font-size: 14px;
+                color: #000;
+                font-weight: 500;
+            }
+            .dropdown li a:hover {
+                color: #000;
+                background-color: #f5f5f5;
+            }
+
+            .btn-cta {
+                border: 1px solid #fff;
+                padding: 10px 25px;
+                border-radius: 30px;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                background: transparent;
+                color: #fff;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .btn-cta:hover {
+                background-color: #fff;
+                color: #000;
+            }
+            .navbar.scrolled .btn-cta {
+                border-color: #222;
+                color: #222;
+            }
+            .navbar.scrolled .btn-cta:hover {
+                background-color: #222;
+                color: #fff;
+            }
+
+            /* --- HERO SECTION --- */
+            .page-hero {
+                position: relative;
+                height: 60vh;
+                width: 100%;
+                background-image: url("https://www.quangbinhtravel.vn/wp-content/uploads/2020/09/dong-phong-nha.jpg");
+                background-size: cover;
+                background-position: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .hero-overlay {
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.5);
+            }
+            .page-title {
+                position: relative;
+                z-index: 2;
+                font-size: 3.5rem;
+                font-weight: 800;
+                color: #fff;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                text-align: center;
+                text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                padding: 0 20px;
+            }
+
+            /* --- LAYOUT --- */
+            .main-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 60px 20px;
+                display: grid;
+                grid-template-columns: 280px 1fr;
+                gap: 50px;
+                flex: 1;
+            }
+
+            /* SIDEBAR */
+            .sidebar {
+                position: sticky;
+                top: 130px;
+                height: fit-content;
+            }
+            .sidebar-title {
+                font-size: 1.3rem;
+                font-weight: 800;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #ddd;
+                color: #333;
+            }
+
+            .toc-link {
+                display: block;
+                font-size: 0.95rem;
+                color: #555;
+                padding: 12px 15px;
+                border-radius: 4px;
+                font-weight: 600;
+                transition: all 0.2s;
+                border-left: 4px solid transparent;
+                background-color: #f9f9f9;
+                margin-bottom: 5px;
+            }
+
+            .toc-link:hover {
+                background-color: #e9e9e9;
+            }
+            .toc-link.active {
+                background-color: #e9e9e9;
+                color: #000;
+                border-left: 4px solid #000;
+            }
+
+            /* CONTENT */
+            .content-section {
+                margin-bottom: 60px;
+            }
+
+            .section-heading {
+                font-size: 2rem;
+                font-weight: 900;
+                margin-bottom: 20px;
+                color: #111;
+                text-transform: uppercase;
+            }
+
+            p {
+                margin-bottom: 20px;
+                color: #444;
+                text-align: justify;
+                font-size: 1rem;
+            }
+
+            .safety-principles {
+                background-color: #f0f4f8;
+                border-left: 4px solid #4a90e2;
+                padding: 25px;
+                border-radius: 4px;
+                margin-top: 20px;
+            }
+            .safety-principles ol {
+                padding-left: 20px;
+            }
+            .safety-principles li {
+                margin-bottom: 15px;
+                font-size: 0.95rem;
+                color: #333;
+            }
+
+            .level-card {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                margin-bottom: 25px;
+                overflow: hidden;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+            }
+            .level-header {
+                background-color: #222;
+                color: #fff;
+                padding: 15px 20px;
+                font-size: 1.3rem;
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+            .level-body {
+                padding: 20px;
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: 20px;
+            }
+            .level-body strong {
+                color: #000;
+                font-weight: 700;
+            }
+            .level-body ul {
+                padding-left: 20px;
+                list-style-type: disc;
+            }
+            .level-body li {
+                margin-bottom: 5px;
+            }
+
+            .pyramid-placeholder {
+                width: 100%;
+                height: 600px;
+                background-image: url("https://i.ibb.co/MD3fVbtC/adventurelevel2025-vn2-638767364206906426.png");
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 8px;
+                border: 2px dashed #ccc;
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            /* --- FOOTER --- */
+            .site-footer {
+                background-color: #faf8f5;
+                padding: 60px 0;
+                border-top: 1px solid #e0e0e0;
+                margin-top: auto;
+            }
+            .footer-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            .footer-logo {
+                width: 150px;
+                margin-bottom: 20px;
+                display: block;
+                filter: brightness(0) opacity(0.8);
+            }
+            .footer-title {
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 15px;
+                text-transform: uppercase;
+            }
+            .footer-info p {
+                font-size: 0.95rem;
+                color: #555;
+                margin-bottom: 10px;
+                line-height: 1.6;
+            }
+
+            /* Responsive */
+            @media (max-width: 900px) {
+                .main-container {
+                    grid-template-columns: 1fr;
+                }
+                .sidebar {
+                    display: none;
+                }
+                .level-body {
+                    grid-template-columns: 1fr;
+                }
+                .navbar {
+                    padding: 15px 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- NAVBAR -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-left">
+                <a href="index.html">
+                    <img
+                        src="https://oxalisadventure.com/images/logo-oxalis-white.svg"
+                        alt="Oxalis Logo"
+                        class="nav-logo-img"
+                    >
+                </a>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    Hang động
+                    <ul class="dropdown">
+                        <li><a href="#">Hang Sơn Đoòng</a></li>
+                        <li><a href="#">Hang Tú Làn</a></li>
+                        <li><a href="#">Hang Én</a></li>
+                        <li><a href="#">Hang Ba</a></li>
+                        <li><a href="#">Hang Va</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    An toàn
+                    <ul class="dropdown">
+                        <!-- Highlighted Link -->
+                        <li>
+                            <a
+                                href="safety.html"
+                                style="color: #000; font-weight: 700"
+                            >Quản lý an toàn</a>
+                        </li>
+                        <li><a href="equipment.html">Thiết bị đi tour</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    Hữu ích
+                    <ul class="dropdown">
+                        <li>
+                            <a href="guide.html"
+                            >Hướng dẫn đi, đến Quảng Bình</a>
+                        </li>
+                        <li><a href="faqs.html">Giải đáp thắc mắc</a></li>
+                        <li><a href="contact.html">Thông tin liên hệ</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="nav-right">
+                <button class="btn-cta">Đặt tour ngay</button>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <header class="page-hero">
+            <div class="hero-overlay"></div>
+            <h1 class="page-title">QUẢN LÝ<br>AN TOÀN</h1>
+        </header>
+
+        <!-- CONTAINER -->
+        <div class="main-container">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-title">Nội dung</div>
+                <ul class="toc-list">
+                    <li>
+                        <a href="#uu-tien-hang-dau" class="toc-link"
+                        >Ưu tiên hàng đầu</a>
+                    </li>
+                    <li>
+                        <a href="#muc-do-mao-hiem" class="toc-link"
+                        >Mức độ mạo hiểm</a>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main class="content">
+                <section id="uu-tien-hang-dau" class="content-section">
+                    <p>
+                        An toàn luôn là yếu tố ưu tiên hàng đầu của Oxalis
+                        Adventure nhằm đảm bảo an toàn cho cả du khách và đội
+                        ngũ nhân viên trong bất kỳ chuyến đi nào. Oxalis chỉ sử
+                        dụng các trang thiết bị chất lượng cao và đạt chuẩn quốc
+                        tế, chủ yếu nhập khẩu từ Châu Âu như Pháp, Anh và Thụy
+                        Sỹ. Toàn bộ đội ngũ hướng dẫn viên đều phải trải qua
+                        huấn luyện đào tạo chuyên nghiệp và được kiểm tra trình
+                        độ kỹ năng thường xuyên.
+                    </p>
+                    <p>
+                        Bất kỳ ai thiếu kinh nghiệm hoặc không đạt yêu cầu đều
+                        không được phép dẫn tour, chỉ những hướng dẫn viên đạt
+                        chuẩn và dày dặn kinh nghiệm mới được chỉ định dẫn tour
+                        của Oxalis Adventure.
+                    </p>
+
+                    <h2 class="section-heading">
+                        An toàn là yếu tố ưu tiên hàng đầu
+                    </h2>
+                    <p>
+                        Oxalis Adventure đã có hơn 10 năm hoạt động trong lĩnh
+                        vực tổ chức các tour du lịch mạo hiểm đến các hang động
+                        đẹp bậc nhất tỉnh Quảng Bình. Oxalis luôn tuân thủ và
+                        chưa bao giờ có bất kỳ tai nạn đáng tiếc liên quan lũ
+                        lụt nào nhờ vào việc Oxalis luôn đặt yếu tố an toàn làm
+                        ưu tiên hàng đầu, được thực hiện dựa trên các nguyên tắc
+                        sau:
+                    </p>
+
+                    <div class="safety-principles">
+                        <ol>
+                            <li>
+                                Tất cả các tour khám phá hang động qua đêm hoặc
+                                dài ngày trong rừng sâu của Oxalis chỉ hoạt động
+                                vào mùa khô (từ giữa tháng 11 năm nay đến giữa
+                                tháng 9 năm sau) và đều tạm ngừng hoạt động vào
+                                mùa mưa (từ giữa tháng 9 đến giữa tháng 11).
+                            </li>
+                            <li>
+                                Hầu hết các hang động mà Oxalis đang khai thác
+                                đều có nhiều cửa hang vì vậy khi đi tour có thể
+                                linh động vào hang hoặc thoát ra ngoài bằng
+                                nhiều lối khác nhau.
+                            </li>
+                            <li>
+                                Các hang động mà Oxalis đang khai thác đều có
+                                kích thước rất lớn, vì vậy khi mưa lũ đến thì
+                                cũng không gây nguy hiểm vì thể tích hang động
+                                quá lớn không thể bị ngập như các hang động nhỏ
+                                hơn được.
+                            </li>
+                            <li>
+                                Trong trường hợp thời tiết bất thường như mưa
+                                bão đột ngột, chúng tôi luôn có kế hoạch dự
+                                phòng và có thể lập tức thay đổi lộ trình một
+                                cách linh hoạt nhất nhằm đảm bảo an toàn.
+                            </li>
+                            <li>
+                                Tất cả các tour đều được điều hành bởi đội ngũ
+                                hướng dẫn viên chuyên nghiệp và dày dặn kinh
+                                nghiệm, cùng các chuyên gia hang động – những
+                                người rất am hiểu và giàu kinh nghiệm về vấn đề
+                                an toàn.
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section id="muc-do-mao-hiem" class="content-section">
+                    <h2 class="section-heading">Mức độ mạo hiểm Oxalis</h2>
+                    <p>
+                        Oxalis xếp hạng các tour theo một hệ thống Mức độ mạo
+                        hiểm để giúp các du khách có thể đánh giá, lựa chọn tour
+                        phù hợp thể lực và khả năng của mình. Các cấp độ đều dựa
+                        trên nhiều năm tổng hợp ý kiến của khách hàng, tư vấn
+                        của các chuyên gia hang động và ban lãnh đạo công ty
+                        Oxalis.
+                    </p>
+
+                    <!-- Mức độ 1 -->
+                    <div class="level-card">
+                        <div class="level-header">Mức độ 1: Cơ bản</div>
+                        <div class="level-body">
+                            <div>
+                                <strong>Yêu cầu:</strong> Có tinh thần phiêu lưu
+                                thám hiểm.
+                            </div>
+                            <div>
+                                <strong>Hoạt động:</strong>
+                                <ul>
+                                    <li>
+                                        Băng rừng nhẹ nhàng, vượt một số đoạn đá
+                                        và bơi lội (tùy chọn).
+                                    </li>
+                                    <li>
+                                        Vượt khoảng 6km đường rừng, khám phá
+                                        hang 300m.
+                                    </li>
+                                    <li>An toàn cho trẻ em.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mức độ 2 -->
+                    <div class="level-card">
+                        <div class="level-header">Mức độ 2: Dễ dàng</div>
+                        <div class="level-body">
+                            <div>
+                                <strong>Yêu cầu:</strong> Thể lực cơ bản, có
+                                tham gia một số hoạt động thể thao.
+                            </div>
+                            <div>
+                                <strong>Hoạt động:</strong>
+                                <ul>
+                                    <li>
+                                        Vượt 8-12km rừng núi, 800m-2km thám hiểm
+                                        hang.
+                                    </li>
+                                    <li>Bơi sông ngầm (50-150m mỗi chặng).</li>
+                                    <li>Leo thang với dây đai an toàn.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mức độ 3 -->
+                    <div class="level-card">
+                        <div class="level-header">Mức độ 3: Vừa phải</div>
+                        <div class="level-body">
+                            <div>
+                                <strong>Yêu cầu:</strong> Thường xuyên tập thể
+                                dục, thể thao.
+                            </div>
+                            <div>
+                                <strong>Hoạt động:</strong>
+                                <ul>
+                                    <li>
+                                        Vượt 8-22km địa hình đồi đá, 1,5-7km
+                                        thám hiểm hang.
+                                    </li>
+                                    <li>
+                                        Bơi sông ngầm (50-150m đối với một số
+                                        tour).
+                                    </li>
+                                    <li>Băng sông suối.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mức độ 4 -->
+                    <div class="level-card">
+                        <div class="level-header">Mức độ 4: Thách thức</div>
+                        <div class="level-body">
+                            <div>
+                                <strong>Yêu cầu:</strong> Thường xuyên tập thể
+                                dục, thể thao.
+                            </div>
+                            <div>
+                                <strong>Hoạt động:</strong>
+                                <ul>
+                                    <li>
+                                        Vượt 25km đường rừng núi và 3,5km thám
+                                        hiểm hang.
+                                    </li>
+                                    <li>Leo dốc với độ cao thay đổi 1300m.</li>
+                                    <li>
+                                        Leo thang 10m và 15m với dây bảo hộ.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mức độ 5 -->
+                    <div class="level-card">
+                        <div class="level-header">Mức độ 5: Thách thức cao</div>
+                        <div class="level-body">
+                            <div>
+                                <strong>Yêu cầu:</strong> Thể lực tốt, đã có
+                                kinh nghiệm trekking.
+                            </div>
+                            <div>
+                                <strong>Hoạt động:</strong>
+                                <ul>
+                                    <li>
+                                        Vượt 30km đường rừng núi và 5km thám
+                                        hiểm hang.
+                                    </li>
+                                    <li>Leo dốc với độ cao thay đổi 1400m.</li>
+                                    <li>Đu dây mạo hiểm 15m trong hang.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mức độ 6 -->
+                    <div class="level-card">
+                        <div class="level-header">Mức độ 6: Khó</div>
+                        <div class="level-body">
+                            <div>
+                                <strong>Yêu cầu:</strong> Thể lực tốt, đã có
+                                kinh nghiệm trekking.
+                            </div>
+                            <div>
+                                <strong>Hoạt động:</strong>
+                                <ul>
+                                    <li>
+                                        Vượt 20-25km đường rừng núi, 8km thám
+                                        hiểm hang.
+                                    </li>
+                                    <li>
+                                        Leo dốc với độ cao thay đổi 800m -
+                                        1700m.
+                                    </li>
+                                    <li>
+                                        Leo Bức tường Việt Nam cao 90m (sử dụng
+                                        thiết bị chuyên dụng).
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pyramid-placeholder"></div>
+                </section>
+            </main>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-container">
+                <img
+                    src="https://oxalisadventure.com/images/logo-oxalis-white.svg"
+                    alt="Oxalis"
+                    class="footer-logo"
+                >
+                <h3 class="footer-title">Công ty TNHH Oxalis</h3>
+                <div class="footer-info">
+                    <p>
+                        Địa chỉ: Tổ Dân Phố Phong Nha, Xã Phong Nha, Tỉnh Quảng
+                        Trị, Việt Nam.
+                    </p>
+                    <p>
+                        Giấy phép ĐKKD số 3100754990, đăng ký lần đầu ngày
+                        08/06/2011.
+                    </p>
+                    <p>
+                        Nơi cấp: Sở kế hoạch và đầu tư tỉnh Quảng Trị - Phòng
+                        đăng ký kinh doanh.
+                    </p>
+                    <p>
+                        Giấy phép Kinh doanh lữ hành quốc tế số
+                        44-002/2014/TCDL-GPLHQT do Tổng Cục Du Lịch cấp ngày
+                        10/03/2014.
+                    </p>
+                    <p>Email: contact@oxalisadventure.com</p>
+                    <p>Hotline: +84 919900357</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script>
+            // 1. Navbar Scroll Effect
+            const navbar = document.getElementById("navbar");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            });
+
+            // 2. Sidebar Highlight Logic
+            const sections = document.querySelectorAll(
+                "section",
+            );
+            const navLinks = document.querySelectorAll(
+                ".toc-link",
+            );
+
+            function highlightSidebar() {
+                let current = "";
+                const scrollY = window.scrollY;
+
+                sections.forEach((section) => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute(
+                            "id",
+                        );
+                    }
+                });
+
+                navLinks.forEach((link) => {
+                    link.classList.remove("active");
+                    if (
+                        link.getAttribute("href") ===
+                            `#${current}`
+                    ) {
+                        link.classList.add("active");
+                    }
+                });
+            }
+
+            window.addEventListener("scroll", highlightSidebar);
+            highlightSidebar(); // Run on load
+        </script>
+    </body>
+</html>
