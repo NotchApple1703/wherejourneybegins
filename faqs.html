@@ -12,6 +12,7 @@
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"
         >
+        <link rel="stylesheet" href="css/auth.css">
 
         <style>
             /* --- GLOBAL RESET & SHARED STYLES --- */
@@ -408,6 +409,9 @@
 
             <div class="nav-right">
                 <button class="btn-cta">Đặt tour ngay</button>
+                <button id="authBtn" class="auth-btn">
+                    <img src="" alt="User" id="authAvatar">
+                </button>
             </div>
         </nav>
 
@@ -797,7 +801,8 @@
             }
 
             window.addEventListener("scroll", highlightSidebar);
-            highlightSidebar(); // Run on load
+   highlightSidebar(); // Run on load
         </script>
+        <script src="js/auth.js"></script>
     </body>
 </html>

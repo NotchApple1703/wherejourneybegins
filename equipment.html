@@ -12,6 +12,7 @@
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"
         >
+        <link rel="stylesheet" href="css/auth.css">
 
         <style>
             /* --- GLOBAL RESET & SHARED STYLES --- */
@@ -381,6 +382,34 @@
             }
 
             /* Responsive */
+            /* --- ANIMATIONS --- */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .equipment-card {
+                /* Existing styles... */
+                opacity: 0; /* Hidden initially */
+                transform: translateY(50px);
+                transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease-out, box-shadow 0.3s ease;
+            }
+            .equipment-card.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .equipment-card:hover {
+                 transform: translateY(-10px) scale(1.03) !important; /* Override visible state transform */
+                 z-index: 10;
+            }
+
+            /* MEDIA QUERIES */
             @media (max-width: 768px) {
                 .navbar {
                     padding: 15px 20px;
@@ -401,7 +430,16 @@
                 </a>
             </div>
             <ul class="nav-menu">
-                <li class="nav-item">Hang động</li>
+                <li class="nav-item">
+                    Hang động
+                    <ul class="dropdown">
+                        <li><a href="#">Hang Sơn Đoòng</a></li>
+                        <li><a href="#">Hang Tú Làn</a></li>
+                        <li><a href="#">Hang Én</a></li>
+                        <li><a href="#">Hang Ba</a></li>
+                        <li><a href="#">Hang Va</a></li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     An toàn
                     <ul class="dropdown">
@@ -428,6 +466,13 @@
             </ul>
             <div class="nav-right">
                 <button class="btn-cta">Đặt tour ngay</button>
+                <button id="authBtn" class="auth-btn">
+                    <img
+                        src="https://ui-avatars.com/api/?name=User&background=random"
+                        alt="User"
+                        id="authAvatar"
+                    >
+                </button>
             </div>
         </nav>
 
@@ -452,6 +497,8 @@
 
         <!-- Overlay for Zoom Effect -->
         <div class="zoom-overlay"></div>
+
+        <!-- AUTH MODAL (Injected by JS) -->
 
         <!-- FOOTER -->
         <footer class="site-footer">
@@ -720,6 +767,41 @@
                 modal.classList.remove("active");
                 overlay.classList.remove("active");
             });
+
+            // --- SCROLL ANIMATION (WAVE EFFECT) ---
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                // Filter only intersecting entries
+                const intersectingEntries = entries.filter(e => e.isIntersecting);
+                
+                // Sort by DOM order to ensure left-to-right wave
+                // (Note: entries are usually in order, but good to be safe if browser differs)
+                intersectingEntries.sort((a, b) => {
+                    return Array.from(a.target.parentNode.children).indexOf(a.target) - 
+                           Array.from(b.target.parentNode.children).indexOf(b.target);
+                });
+
+                intersectingEntries.forEach((entry, index) => {
+                    // Stagger: 150ms delay per item in the batch
+                    setTimeout(() => {
+                        entry.target.classList.add("visible");
+                    }, index * 150);
+                    
+                    observer.unobserve(entry.target);
+                });
+            }, observerOptions);
+
+            // Observe all cards
+            document.querySelectorAll(".equipment-card").forEach((card) => {
+                observer.observe(card);
+            });
         </script>
+        
+        <!-- Shared Auth Logic -->
+        <script src="js/auth.js"></script>
     </body>
 </html>
