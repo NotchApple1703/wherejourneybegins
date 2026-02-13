@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tài khoản - Oxalis Adventure</title>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        >
+        
+        <!-- Shared Styles -->
+        <link rel="stylesheet" href="css/auth.css">
+
+        <style>
+            /* --- GLOBAL RESET --- */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Montserrat", sans-serif;
+                background-color: #fcfcfc;
+                color: #333;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            a { text-decoration: none; color: inherit; transition: 0.3s; }
+            ul { list-style: none; }
+
+            /* --- NAVBAR (Copied from Equipment.html) --- */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 30px 50px;
+                z-index: 1000;
+                background: rgba(0, 0, 0, 0.8); /* Darker for readability on this page */
+                backdrop-filter: blur(4px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .nav-logo-img { width: 120px; height: auto; display: block; }
+            .nav-menu { display: flex; gap: 40px; }
+            .nav-item {
+                position: relative;
+                font-size: 14px;
+                font-weight: 600;
+                text-transform: uppercase;
+                cursor: pointer;
+                padding: 10px 0;
+                color: #fff;
+            }
+            .nav-item::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background-color: #fff;
+                transition: width 0.3s ease;
+            }
+            .nav-item:hover::after { width: 100%; }
+            
+            /* Dropdown */
+            .dropdown {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                background-color: #ffffff;
+                min-width: 220px;
+                padding: 15px 0;
+                border-radius: 6px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                border: 1px solid #f0f0f0;
+            }
+            .dropdown::before {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-bottom: 6px solid #fff;
+            }
+            .nav-item:hover .dropdown {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(10px);
+            }
+            .dropdown li a {
+                display: block;
+                padding: 12px 25px;
+                font-size: 14px;
+                color: #000;
+                font-weight: 500;
+            }
+            .dropdown li a:hover {
+                color: #000;
+                background-color: #f5f5f5;
+            }
+
+            .btn-cta {
+                border: 1px solid #fff;
+                padding: 10px 25px;
+                border-radius: 30px;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                background: transparent;
+                color: #fff;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .btn-cta:hover { background-color: #fff; color: #000; }
+
+            /* --- ACCOUNT CONTAINER --- */
+            .account-container {
+                max-width: 1000px;
+                margin: 150px auto 60px; /* Top margin for fixed navbar */
+                padding: 0 20px;
+                flex: 1;
+                width: 100%;
+            }
+            .account-header {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                margin-bottom: 40px;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 30px;
+            }
+            .account-avatar-large {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 3px solid #ddd;
+            }
+            .account-avatar-large img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .account-welcome h1 {
+                font-size: 2rem;
+                color: #222;
+                margin-bottom: 5px;
+            }
+            .account-welcome p {
+                color: #666;
+            }
+
+            /* --- FOOTER --- */
+            .site-footer {
+                background-color: #faf8f5;
+                padding: 60px 0;
+                border-top: 1px solid #e0e0e0;
+                margin-top: auto;
+            }
+            .footer-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            .footer-logo {
+                width: 150px;
+                margin-bottom: 20px;
+                display: block;
+                filter: brightness(0) opacity(0.8);
+            }
+            .footer-title {
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 15px;
+                text-transform: uppercase;
+            }
+            .footer-info p {
+                font-size: 0.95rem;
+                color: #555;
+                margin-bottom: 10px;
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- NAVBAR -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-left">
+                <a href="index.html">
+                    <img
+                        src="https://oxalisadventure.com/images/logo-oxalis-white.svg"
+                        alt="Oxalis Logo"
+                        class="nav-logo-img"
+                    >
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    Hang động
+                    <ul class="dropdown">
+                        <li><a href="#">Hang Sơn Đoòng</a></li>
+                        <li><a href="#">Hang Tú Làn</a></li>
+                        <li><a href="#">Hang Én</a></li>
+                        <li><a href="#">Hang Ba</a></li>
+                        <li><a href="#">Hang Va</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    An toàn
+                    <ul class="dropdown">
+                        <li><a href="safety.html">Quản lý an toàn</a></li>
+                        <li><a href="equipment.html">Thiết bị đi tour</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    Hữu ích
+                    <ul class="dropdown">
+                        <li><a href="guide.html">Hướng dẫn đi, đến Quảng Bình</a></li>
+                        <li><a href="faqs.html">Giải đáp thắc mắc</a></li>
+                        <li><a href="contact.html">Thông tin liên hệ</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="nav-right">
+                <button class="btn-cta">Đặt tour ngay</button>
+                <button id="authBtn" class="auth-btn">
+                    <img src="" alt="User" id="authAvatar">
+                </button>
+            </div>
+        </nav>
+
+        <!-- ACCOUNT CONTENT -->
+        <div class="account-container">
+            <div class="account-header">
+                <div class="account-avatar-large">
+                    <img id="pageAvatar" src="https://ui-avatars.com/api/?name=User&background=random" alt="Avatar">
+                </div>
+                <div class="account-welcome">
+                    <h1 id="userName">Xin chào, User!</h1>
+                    <p id="userEmail">user@example.com</p>
+                </div>
+            </div>
+
+            <div class="user-info-section">
+                <div class="section-title">Thông tin chung</div>
+                <table class="user-info-table" id="infoTable">
+                    <!-- Populated by JS -->
+                </table>
+
+                <br>
+                <div class="section-title">Lịch sử đặt tour</div>
+                <table class="trips-table">
+                    <thead>
+                        <tr style="background:#f9f9f9">
+                            <th>Mã Booking</th>
+                            <th>Tour</th>
+                            <th>Ngày đi</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tripsTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+
+                <button class="auth-submit-btn logout-btn" onclick="logout()">Đăng xuất</button>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-container">
+                <img
+                    src="https://oxalisadventure.com/images/logo-oxalis-white.svg"
+                    alt="Oxalis"
+                    class="footer-logo"
+                >
+                <h3 class="footer-title">Công ty TNHH Oxalis</h3>
+                <div class="footer-info">
+                    <p>Địa chỉ: Tổ Dân Phố Phong Nha, Xã Phong Nha, Tỉnh Quảng Trị, Việt Nam.</p>
+                    <p>Email: contact@oxalisadventure.com | Hotline: +84 919900357</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="js/auth.js"></script>
+        <script>
+            // Populate Account Info
+            document.addEventListener("DOMContentLoaded", () => {
+                const user = JSON.parse(localStorage.getItem("currentUser"));
+                if (!user) return; // auth.js will handle redirect
+
+                document.getElementById("userName").innerText = `Xin chào, ${user.name}!`;
+                document.getElementById("userEmail").innerText = user.email;
+                document.getElementById("pageAvatar").src = `https://ui-avatars.com/api/?name=${user.name}&background=0D8ABC&color=fff`;
+
+                // Info Table
+                document.getElementById("infoTable").innerHTML = `
+                    <tr><th>Họ và tên</th><td>${user.name}</td></tr>
+                    <tr><th>Email</th><td>${user.email}</td></tr>
+                    <tr><th>Số điện thoại</th><td>${user.phone}</td></tr>
+                    <tr><th>Ngày sinh</th><td>${user.dob}</td></tr>
+                    <tr><th>Quốc tịch</th><td>${user.nationality}</td></tr>
+                `;
+
+                // Trips Table
+                const pastTrips = [
+                    { id: "#OX-2023-001", tour: "Thám hiểm Sơn Đoòng", date: "15/05/2023", status: "Hoàn thành" },
+                    { id: "#OX-2024-045", tour: "Khám phá Tú Làn 2 ngày", date: "10/02/2024", status: "Đã hủy" },
+                ];
+                
+                document.getElementById("tripsTableBody").innerHTML = pastTrips.map(t => `
+                    <tr>
+                        <td>${t.id}</td>
+                        <td>${t.tour}</td>
+                        <td>${t.date}</td>
+                        <td>${t.status}</td>
+                    </tr>
+                `).join("");
+            });
+        </script>
+    </body>
+</html>
