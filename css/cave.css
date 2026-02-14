@@ -488,6 +488,11 @@ ul {
     transform: scale(1.05);
 }
 
+.cta-section p {
+    color: white;
+    text-align: center;
+}
+
 /* --- FOOTER --- */
 .site-footer {
     background-color: #faf8f5;
