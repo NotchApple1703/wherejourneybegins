@@ -4,11 +4,11 @@ https://github.com/user-attachments/assets/b5cd1414-3001-4510-afe2-edeb912e0448
 # Form
 
 ## Đăng nhập
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/c455bae9-6c8b-4a40-b175-38911bc5ab2c" />
+<img width="540" height="542" alt="image" src="https://github.com/user-attachments/assets/07cc6fcb-5bdc-4021-af89-601a85ecd3b1" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/47ff1b1655f4081eaa6ad10bd494a3f24c0ce1ff/js/auth.js#L16-L30
 
 ## Đăng kí
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/2a22589b-0861-43bd-acf1-8ee1ce1e3fed" />
+<img width="573" height="879" alt="image" src="https://github.com/user-attachments/assets/3210005a-4611-4f31-807f-4daee4183ce6" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/47ff1b1655f4081eaa6ad10bd494a3f24c0ce1ff/js/auth.js#L33-L70
 
 ## Đặt tour
@@ -45,3 +45,4 @@ https://github.com/NotchApple1703/wherejourneybegins/blob/0608aa5b7bceac945f6c90
 # Menu
 <img width="1920" height="147" alt="image" src="https://github.com/user-attachments/assets/51baa15c-b107-423f-b4ac-4b906c3fcd6b" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/43afe31af01dea3bcfc179082decc2a181e9dac9/index.html#L438-L484
+
