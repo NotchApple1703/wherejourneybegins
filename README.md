@@ -13,31 +13,35 @@ https://github.com/NotchApple1703/wherejourneybegins/blob/47ff1b1655f4081eaa6ad1
 
 ## Đặt tour
 
-### Chọn tour
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/88183dea-5134-4120-9dcf-745ddc7751f0" />
+### Lọc tour
+<img width="383" height="671" alt="image" src="https://github.com/user-attachments/assets/fb6aafd7-f01b-43d7-b5da-0da17803536f" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/47ff1b1655f4081eaa6ad10bd494a3f24c0ce1ff/booking.html#L734-L810
 
 ### Điền thông tin
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/5bd41f0d-ad23-4b5a-9917-54dcd6632bbe" />
+<img width="610" height="699" alt="image" src="https://github.com/user-attachments/assets/54a1ccee-acb1-4fd9-82cf-95af43bca544" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/47ff1b1655f4081eaa6ad10bd494a3f24c0ce1ff/booking.html#L1156-L1173
 
 ### Thanh toán
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/dd2f6302-8ec4-4a77-a8ae-4eec142b69b4" />
+<img width="399" height="583" alt="image" src="https://github.com/user-attachments/assets/d6738bbb-7d97-4513-9a23-ce0af11c162c" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/47ff1b1655f4081eaa6ad10bd494a3f24c0ce1ff/booking.html#L863-L909
 
 # Table
 
 ## Bảng giờ tàu
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/3e0f1b15-4dea-4957-8100-00d7e07c4673" />
+<img width="1078" height="357" alt="image" src="https://github.com/user-attachments/assets/055311be-b19f-452a-8dea-405653b1e5b7" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/0608aa5b7bceac945f6c906d9e0b9843180d999b/guide.html#L607-L618
 
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/50046cd4-104b-4fd9-a584-6e646b9cf4e8" />
+<img width="1091" height="255" alt="image" src="https://github.com/user-attachments/assets/6d504227-1ce4-433c-af7a-137e22630a84" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/0608aa5b7bceac945f6c906d9e0b9843180d999b/guide.html#L665-L676
 
 ## Thông tin tài khoản
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/24b8bbd8-d532-43c5-811c-b7d09dfe2f40" />
+<img width="647" height="373" alt="image" src="https://github.com/user-attachments/assets/819b5197-49fb-46c8-8170-deb732e0f47c" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/0608aa5b7bceac945f6c906d9e0b9843180d999b/account.html#L317-L321
 
 ## Lịch sử đặt tour
-<img width="1920" height="912" alt="image" src="https://github.com/user-attachments/assets/d4219df6-e3bf-4eb1-80b9-7100d9a9a4d6" />
+<img width="1192" height="251" alt="image" src="https://github.com/user-attachments/assets/7a5bbd07-e625-4e60-8b0c-97bbc4c69d15" />
 https://github.com/NotchApple1703/wherejourneybegins/blob/0608aa5b7bceac945f6c906d9e0b9843180d999b/account.html#L331-L336
+
+# Menu
+<img width="1920" height="147" alt="image" src="https://github.com/user-attachments/assets/51baa15c-b107-423f-b4ac-4b906c3fcd6b" />
+https://github.com/NotchApple1703/wherejourneybegins/blob/43afe31af01dea3bcfc179082decc2a181e9dac9/index.html#L438-L484
