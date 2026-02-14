@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Đặt Tour - Oxalis Adventure</title>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        >
+
+        <style>
+            /* --- GLOBAL RESET & SHARED STYLES --- */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: "Montserrat", sans-serif;
+                background-color: #fcfcfc;
+                color: #333;
+                overflow-x: hidden;
+                line-height: 1.6;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            a {
+                text-decoration: none;
+                color: inherit;
+                transition: 0.3s;
+            }
+            ul {
+                list-style: none;
+            }
+
+            /* --- NAVBAR --- */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 30px 50px;
+                z-index: 1000;
+                background: rgba(0, 0, 0, 0.4);
+                backdrop-filter: blur(4px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                transition: all 0.4s ease;
+            }
+            .navbar.scrolled {
+                background: rgba(255, 255, 255, 0.95);
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+                padding: 15px 50px;
+            }
+            .nav-logo-img {
+                width: 120px;
+                height: auto;
+                display: block;
+            }
+            .nav-menu {
+                display: flex;
+                gap: 40px;
+            }
+            .nav-item {
+                position: relative;
+                font-size: 14px;
+                font-weight: 600;
+                text-transform: uppercase;
+                cursor: pointer;
+                padding: 10px 0;
+                color: #fff;
+            }
+            .navbar.scrolled .nav-logo-img {
+                filter: invert(100%);
+            }
+            .navbar.scrolled .nav-item {
+                color: #222;
+            }
+
+            .nav-item::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background-color: #fff;
+                transition: width 0.3s ease;
+            }
+            .navbar.scrolled .nav-item::after {
+                background-color: #222;
+            }
+            .nav-item:hover::after {
+                width: 100%;
+            }
+
+            /* Dropdown */
+            .dropdown {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                background-color: #ffffff;
+                min-width: 220px;
+                padding: 15px 0;
+                border-radius: 6px;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                border: 1px solid #f0f0f0;
+            }
+            .dropdown::before {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-bottom: 6px solid #fff;
+            }
+            .nav-item:hover .dropdown {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(10px);
+            }
+            .dropdown li a {
+                display: block;
+                padding: 12px 25px;
+                font-size: 14px;
+                color: #000;
+                font-weight: 500;
+            }
+            .dropdown li a:hover {
+                color: #000;
+                background-color: #f5f5f5;
+            }
+
+            .btn-cta {
+                border: 1px solid #fff;
+                padding: 10px 25px;
+                border-radius: 30px;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                background: transparent;
+                color: #fff;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .btn-cta:hover {
+                background-color: #fff;
+                color: #000;
+            }
+            .navbar.scrolled .btn-cta {
+                border-color: #222;
+                color: #222;
+            }
+            .navbar.scrolled .btn-cta:hover {
+                background-color: #222;
+                color: #fff;
+            }
+
+            /* --- HERO SECTION --- */
+            .page-hero {
+                position: relative;
+                height: 60vh;
+                width: 100%;
+                background-image: url("https://vstatic.vietnam.vn/vietnam/resource/IMAGE/2025/1/19/199b5c833ea3411687579cd5e622eda7");
+                background-size: cover;
+                background-position: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .hero-overlay {
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.5);
+            }
+            .page-title {
+                position: relative;
+                z-index: 2;
+                font-size: 4rem;
+                font-weight: 800;
+                color: #fff;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                text-align: center;
+                text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                padding: 0 20px;
+            }
+
+            /* --- BOOKING CONTAINER --- */
+            .booking-container {
+                max-width: 1400px;
+                margin: -80px auto 60px;
+                padding: 0 20px;
+                position: relative;
+                z-index: 5;
+            }
+
+            .booking-card-main {
+                background: #fff;
+                border-radius: 12px;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                padding: 40px;
+                min-height: 600px;
+            }
+
+            /* STEPPER */
+            .stepper {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 40px;
+                position: relative;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .stepper::before {
+                content: "";
+                position: absolute;
+                top: 15px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: #e0e0e0;
+                z-index: 0;
+            }
+            .step {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+                width: 100px;
+            }
+            .step-circle {
+                width: 35px;
+                height: 35px;
+                background: #fff;
+                border: 2px solid #ccc;
+                border-radius: 50%;
+                margin: 0 auto 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                color: #ccc;
+                transition: 0.3s;
+            }
+            .step-label {
+                font-size: 0.85rem;
+                color: #999;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            .step.active .step-circle {
+                background: #222;
+                border-color: #222;
+                color: #fff;
+            }
+            .step.active .step-label {
+                color: #222;
+            }
+            .step.completed .step-circle {
+                background: #4caf50;
+                border-color: #4caf50;
+                color: #fff;
+            }
+
+            /* --- STEP SECTIONS --- */
+            .step-content {
+                display: none;
+                animation: fadeIn 0.5s ease;
+            }
+            .step-content.active {
+                display: block;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* --- STEP 1: CHOOSE TOUR LAYOUT --- */
+            .tour-layout {
+                display: flex;
+                gap: 30px;
+                height: 550px;
+            }
+
+            /* FILTERS SIDEBAR */
+            .filters {
+                width: 280px;
+                flex-shrink: 0;
+                background: #f9f9f9;
+                padding: 25px;
+                border-radius: 8px;
+                height: 100%;
+                overflow-y: auto;
+            }
+            .filter-group {
+                margin-bottom: 20px;
+            }
+            .filter-group label {
+                display: block;
+                font-weight: 700;
+                margin-bottom: 10px;
+                font-size: 0.9rem;
+            }
+            .filter-select, .filter-input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-family: inherit;
+            }
+
+            /* NEW: PRICE RANGE SLIDER STYLES */
+            .filter-range {
+                width: 100%;
+                cursor: pointer;
+                accent-color: #222; /* Makes the slider thumb/track black */
+                margin-top: 5px;
+            }
+            .price-display {
+                font-size: 0.85rem;
+                color: #d32f2f;
+                font-weight: 700;
+                text-align: right;
+                margin-top: 5px;
+            }
+
+            /* --- TOUR GRID (SCROLL VIEW) --- */
+            .tours-grid {
+                flex-grow: 1;
+                height: 100%;
+                overflow-y: auto;
+                padding-right: 15px;
+                padding-bottom: 10px;
+                display: grid;
+                grid-template-columns:
+                    repeat(auto-fill, minmax(280px, 1fr));
+                gap: 25px;
+            }
+
+            .tours-grid::-webkit-scrollbar {
+                width: 8px;
+            }
+            .tours-grid::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 4px;
+            }
+            .tours-grid::-webkit-scrollbar-thumb {
+                background: #ccc;
+                border-radius: 4px;
+            }
+            .tours-grid::-webkit-scrollbar-thumb:hover {
+                background: #999;
+            }
+
+            .tour-card {
+                background: #fff;
+                border: 1px solid #eee;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: 0.3s;
+                cursor: pointer;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 380px;
+            }
+
+            .tour-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            .tour-card.selected {
+                border: 2px solid #222;
+                box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .tour-img {
+                width: 100%;
+                height: 180px;
+                background-size: cover;
+                background-position: center;
+                flex-shrink: 0;
+            }
+
+            .tour-body {
+                padding: 15px;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .tour-name {
+                font-weight: 700;
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+                line-height: 1.4;
+            }
+            .tour-meta {
+                font-size: 0.85rem;
+                color: #666;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .tour-price {
+                font-weight: 700;
+                color: #d32f2f;
+                font-size: 1.1rem;
+            }
+            .tour-level {
+                display: inline-block;
+                padding: 4px 10px;
+                background: #eee;
+                border-radius: 4px;
+                font-size: 0.75rem;
+                font-weight: 600;
+            }
+
+            /* --- STEP 2 & 3 STYLES (Unchanged) --- */
+            .traveler-form-container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .traveler-card {
+                background: #f9f9f9;
+                padding: 25px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                border: 1px solid #eee;
+            }
+            .traveler-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #e0e0e0;
+                padding-bottom: 10px;
+            }
+            .traveler-title {
+                font-weight: 700;
+            }
+            .remove-traveler {
+                color: red;
+                font-size: 0.8rem;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+            .form-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .form-group {
+                margin-bottom: 15px;
+            }
+            .form-group label {
+                display: block;
+                font-size: 0.85rem;
+                margin-bottom: 5px;
+                font-weight: 600;
+            }
+            .form-control {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            .btn-add-person {
+                background: #fff;
+                border: 2px dashed #ccc;
+                color: #555;
+                width: 100%;
+                padding: 15px;
+                border-radius: 8px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+            .btn-add-person:hover {
+                border-color: #222;
+                color: #222;
+                background: #f0f0f0;
+            }
+
+            .summary-container {
+                max-width: 800px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 1.5fr 1fr;
+                gap: 40px;
+            }
+            .summary-box {
+                background: #f9f9f9;
+                padding: 25px;
+                border-radius: 8px;
+            }
+            .summary-title {
+                font-size: 1.2rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 10px;
+            }
+            .summary-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                font-size: 0.95rem;
+            }
+            .summary-row.total {
+                font-weight: 800;
+                font-size: 1.2rem;
+                border-top: 1px solid #ddd;
+                padding-top: 15px;
+                margin-top: 15px;
+            }
+            .payment-form {
+                background: #fff;
+                border: 1px solid #eee;
+                padding: 20px;
+                border-radius: 8px;
+            }
+            .payment-icons {
+                margin-bottom: 15px;
+            }
+            .payment-icons span {
+                display: inline-block;
+                padding: 5px 10px;
+                background: #eee;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                margin-right: 5px;
+                font-weight: 700;
+            }
+
+            .actions {
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+            }
+            .btn-nav {
+                padding: 12px 30px;
+                border-radius: 30px;
+                font-weight: 700;
+                cursor: pointer;
+                text-transform: uppercase;
+                border: none;
+                font-size: 0.9rem;
+            }
+            .btn-prev {
+                background: #eee;
+                color: #555;
+            }
+            .btn-prev:hover {
+                background: #ddd;
+            }
+            .btn-next {
+                background: #222;
+                color: #fff;
+            }
+            .btn-next:hover {
+                background: #444;
+            }
+            .btn-submit {
+                background: #d32f2f;
+                color: #fff;
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            /* --- FOOTER --- */
+            .site-footer {
+                background-color: #faf8f5;
+                padding: 60px 0;
+                border-top: 1px solid #e0e0e0;
+                margin-top: auto;
+            }
+
+            .footer-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            .footer-logo {
+                width: 150px;
+                margin-bottom: 20px;
+                display: block;
+                /* Using the Oxalis logo, filtering it to be dark grey/black to match image */
+                filter: brightness(0) opacity(0.8);
+            }
+
+            .footer-title {
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 15px;
+                text-transform: uppercase;
+            }
+
+            .footer-info p {
+                font-size: 0.95rem;
+                color: #555;
+                margin-bottom: 10px;
+                line-height: 1.6;
+            }
+
+            /* Responsive */
+            @media (max-width: 900px) {
+                .tour-layout {
+                    flex-direction: column;
+                    height: auto;
+                }
+                .filters {
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+                .tours-grid {
+                    max-height: 500px;
+                }
+                .summary-container {
+                    grid-template-columns: 1fr;
+                }
+                .form-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- NAVBAR -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-left">
+                <a href="index.html">
+                    <img
+                        src="https://oxalisadventure.com/images/logo-oxalis-white.svg"
+                        alt="Oxalis Logo"
+                        class="nav-logo-img"
+                    >
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    Hang động
+                    <ul class="dropdown">
+                        <li><a href="#">Hang Sơn Đoòng</a></li>
+                        <li><a href="#">Hang Tú Làn</a></li>
+                        <li><a href="#">Hang Én</a></li>
+                        <li><a href="#">Hang Ba</a></li>
+                        <li><a href="#">Hang Va</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    An toàn
+                    <ul class="dropdown">
+                        <li><a href="safety.html">Quản lý an toàn</a></li>
+                        <li><a href="equipment.html">Thiết bị đi tour</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    Hữu ích
+                    <ul class="dropdown">
+                        <li>
+                            <a href="guide.html"
+                            >Hướng dẫn đi, đến Quảng Bình</a>
+                        </li>
+                        <li><a href="faqs.html">Giải đáp thắc mắc</a></li>
+                        <li><a href="contact.html">Thông tin liên hệ</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="nav-right">
+                <button class="btn-cta">Đặt tour ngay</button>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <header class="page-hero">
+            <div class="hero-overlay"></div>
+            <h1 class="page-title">ĐẶT TOUR</h1>
+        </header>
+
+        <!-- MAIN BOOKING AREA -->
+        <div class="booking-container">
+            <div class="booking-card-main">
+                <!-- STEPPER -->
+                <div class="stepper">
+                    <div class="step active" id="step-ind-1">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Chọn Tour</div>
+                    </div>
+                    <div class="step" id="step-ind-2">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Thông Tin</div>
+                    </div>
+                    <div class="step" id="step-ind-3">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Thanh Toán</div>
+                    </div>
+                </div>
+
+                <!-- STEP 1 CONTENT -->
+                <div class="step-content active" id="step-1">
+                    <div class="tour-layout">
+                        <!-- Filters -->
+                        <aside class="filters">
+                            <h3>Bộ Lọc</h3>
+                            <br>
+                            <div class="filter-group">
+                                <label>Ngày khởi hành</label>
+                                <input
+                                    type="date"
+                                    class="filter-input"
+                                    id="filter-date"
+                                >
+                            </div>
+
+                            <!-- PRICE FILTER (NEW) -->
+                            <div class="filter-group">
+                                <label>Khoảng giá (Max)</label>
+                                <input
+                                    type="range"
+                                    class="filter-range"
+                                    id="filter-price"
+                                    min="2000000"
+                                    max="80000000"
+                                    step="1000000"
+                                    value="80000000"
+                                >
+                                <div class="price-display">
+                                    <span id="price-value">80,000,000</span> VNĐ
+                                </div>
+                            </div>
+
+                            <div class="filter-group">
+                                <label>Độ mạo hiểm</label>
+                                <select class="filter-select" id="filter-level">
+                                    <option value="all">Tất cả</option>
+                                    <option value="1">Cấp 1 - Cơ bản</option>
+                                    <option value="2">Cấp 2 - Dễ dàng</option>
+                                    <option value="3">Cấp 3 - Vừa phải</option>
+                                    <option value="4">
+                                        Cấp 4 - Thách thức
+                                    </option>
+                                    <option value="5">
+                                        Cấp 5 - Thách thức cao
+                                    </option>
+                                    <option value="6">Cấp 6 - Khó</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Thời gian</label>
+                                <select
+                                    class="filter-select"
+                                    id="filter-duration"
+                                >
+                                    <option value="all">Tất cả</option>
+                                    <option value="1">1 Ngày</option>
+                                    <option value="2">2 Ngày</option>
+                                    <option value="3">3 Ngày</option>
+                                    <option value="4">4 Ngày</option>
+                                    <option value="6">6 Ngày</option>
+                                </select>
+                            </div>
+                            <button
+                                class="btn-cta"
+                                style="width: 100%; background: #222; color: #fff; text-align: center"
+                                onclick="applyFilters()"
+                            >
+                                Lọc Tour
+                            </button>
+                        </aside>
+
+                        <!-- Tour Grid -->
+                        <div class="tours-grid" id="tours-container">
+                            <!-- JS will populate this -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2 CONTENT -->
+                <div class="step-content" id="step-2">
+                    <h2 style="text-align: center; margin-bottom: 20px">
+                        Thông Tin Hành Khách
+                    </h2>
+                    <div class="traveler-form-container">
+                        <div id="travelers-list">
+                            <!-- JS will populate first traveler form -->
+                        </div>
+                        <button
+                            class="btn-add-person"
+                            onclick="addTravelerForm()"
+                        >
+                            + Thêm hành khách
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3 CONTENT -->
+                <div class="step-content" id="step-3">
+                    <h2 style="text-align: center; margin-bottom: 30px">
+                        Xác Nhận & Thanh Toán
+                    </h2>
+                    <div class="summary-container">
+                        <!-- Booking Summary -->
+                        <div class="summary-box">
+                            <div class="summary-title">Thông Tin Đặt Chỗ</div>
+                            <div class="summary-row">
+                                <span>Tour:</span>
+                                <strong id="sum-tour-name">...</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Ngày khởi hành:</span>
+                                <strong id="sum-date">...</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Số lượng khách:</span>
+                                <strong id="sum-pax">0</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Giá vé:</span>
+                                <span id="sum-price">0 VNĐ</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>TỔNG CỘNG:</span>
+                                <span id="sum-total" style="color: #d32f2f"
+                                >0 VNĐ</span>
+                            </div>
+                        </div>
+
+                        <!-- Payment -->
+                        <div class="payment-form">
+                            <div class="summary-title">Thanh Toán</div>
+                            <div class="payment-icons">
+                                <span>VISA</span> <span>MASTERCARD</span> <span
+                                >JCB</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Số thẻ</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="0000 0000 0000 0000"
+                                >
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Hết hạn</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="MM/YY"
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="123"
+                                    >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Tên chủ thẻ</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="NGUYEN VAN A"
+                                >
+                            </div>
+                            <button
+                                class="btn-nav btn-submit"
+                                onclick="finishBooking()"
+                            >
+                                THANH TOÁN NGAY
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NAVIGATION BUTTONS -->
+                <div class="actions">
+                    <button
+                        class="btn-nav btn-prev"
+                        id="btn-prev"
+                        onclick="changeStep(-1)"
+                        style="visibility: hidden"
+                    >
+                        Quay lại
+                    </button>
+                    <button
+                        class="btn-nav btn-next"
+                        id="btn-next"
+                        onclick="changeStep(1)"
+                    >
+                        Tiếp tục
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-container">
+                <img
+                    src="https://oxalisadventure.com/images/logo-oxalis-white.svg"
+                    alt="Oxalis"
+                    class="footer-logo"
+                >
+                <h3 class="footer-title">Công ty TNHH Oxalis</h3>
+                <div class="footer-info">
+                    <p>
+                        Địa chỉ: Tổ Dân Phố Phong Nha, Xã Phong Nha, Tỉnh Quảng
+                        Trị, Việt Nam.
+                    </p>
+                    <p>
+                        Giấy phép ĐKKD số 3100754990, đăng ký lần đầu ngày
+                        08/06/2011.
+                    </p>
+                    <p>
+                        Nơi cấp: Sở kế hoạch và đầu tư tỉnh Quảng Trị - Phòng
+                        đăng ký kinh doanh.
+                    </p>
+                    <p>
+                        Giấy phép Kinh doanh lữ hành quốc tế số
+                        44-002/2014/TCDL-GPLHQT do Tổng Cục Du Lịch cấp ngày
+                        10/03/2014.
+                    </p>
+                    <p>Email: contact@oxalisadventure.com</p>
+                    <p>Hotline: +84 919900357</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script>
+            // 1. DATA GENERATION
+            const tourBase = [
+                {
+                    name: "Thám Hiểm Sơn Đoòng",
+                    img: "https://i.natgeofe.com/n/5186fe0d-8628-4027-af0c-ca3e03bc3214/02-son-doong-cave.jpg",
+                    level: 6,
+                    days: 4,
+                    price: 72000000,
+                },
+                {
+                    name: "Thám Hiểm Tú Làn",
+                    img: "https://i.pinimg.com/originals/e5/4d/8e/e54d8eec85618fbca2d9b5ccd2b7bdfe.jpg",
+                    level: 4,
+                    days: 4,
+                    price: 15000000,
+                },
+                {
+                    name: "Hang Én",
+                    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Hang_%C3%89n_Cave_-_201505_-_JB.jpg/1280px-Hang_%C3%89n_Cave_-_201505_-_JB.jpg",
+                    level: 3,
+                    days: 2,
+                    price: 7600000,
+                },
+                {
+                    name: "Hang Va",
+                    img: "https://sondoongcave.net/wp-content/uploads/2020/10/hang-va-quang-binh-06.jpg",
+                    level: 4,
+                    days: 2,
+                    price: 8000000,
+                },
+                {
+                    name: "Hang Tiên",
+                    img: "https://ik.imagekit.io/tvlk/blog/2024/09/hang-cha-loi-10-1024x768.jpeg?tr=q-70,c-at_max,w-500,h-300,dpr-2",
+                    level: 2,
+                    days: 1,
+                    price: 2000000,
+                },
+                {
+                    name: "Thám Hiểm Rừng Sâu Hang Ba",
+                    img: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1Bd8H3.img?w=1198&amp;h=719&amp;m=4&amp;q=91",
+                    level: 6,
+                    days: 6,
+                    price: 50000000,
+                },
+                {
+                    name: "Trải Nghiệm Tú Làn",
+                    img: "https://vietnam.travel/sites/default/files/inline-images/Phong%20Nha%20best%20cave%20treks%20vietnam%20tourism-2.jpg",
+                    level: 1,
+                    days: 1,
+                    price: 1800000,
+                },
+                {
+                    name: "Khám Phá Tú Làn",
+                    img: "https://www.mrlinhadventure.com/UserFiles/image/vietnam-day-tour/Tu-lan-1-day-experience.jpg",
+                    level: 3,
+                    days: 3,
+                    price: 8500000,
+                },
+            ];
+
+            // Generate huge list by duplicating
+            let allTours = [];
+            for (let i = 0; i < 3; i++) {
+                tourBase.forEach((t) => {
+                    let tCopy = { ...t };
+                    tCopy.id = Math.random().toString(36)
+                        .substr(2, 9);
+                    allTours.push(tCopy);
+                });
+            }
+
+            // 2. STATE MANAGEMENT
+            let currentStep = 1;
+            let selectedTourId = null;
+            let selectedTourData = null;
+
+            // 3. INIT
+            document.addEventListener(
+                "DOMContentLoaded",
+                () => {
+                    renderTours(allTours);
+                    addTravelerForm();
+
+                    // Slider Listener
+                    document.getElementById("filter-price")
+                        .addEventListener("input", function () {
+                            document.getElementById(
+                                "price-value",
+                            ).innerText = parseInt(this.value)
+                                .toLocaleString();
+                        });
+
+                    // Navbar scroll
+                    window.addEventListener("scroll", () => {
+                        const navbar = document.getElementById(
+                            "navbar",
+                        );
+                        if (window.scrollY > 50) {
+                            navbar.classList.add("scrolled");
+                        } else {navbar.classList.remove(
+                                "scrolled",
+                            );}
+                    });
+                },
+            );
+
+            // 4. RENDER TOURS
+            function renderTours(tours) {
+                const container = document.getElementById(
+                    "tours-container",
+                );
+                container.innerHTML = "";
+                tours.forEach((tour) => {
+                    const el = document.createElement("div");
+                    el.className = `tour-card ${
+                        selectedTourId === tour.id
+                            ? "selected"
+                            : ""
+                    }`;
+                    el.onclick = () =>
+                        selectTour(tour.id, tour);
+                    el.innerHTML = `
+                    <div class="tour-img" style="background-image: url('${tour.img}')"></div>
+                    <div class="tour-body">
+                        <div class="tour-name">${tour.name}</div>
+                        <div class="tour-meta">
+                            <span>${tour.days} Ngày</span>
+                            <span class="tour-level">Level ${tour.level}</span>
+                        </div>
+                        <div class="tour-price">${tour.price.toLocaleString()} VNĐ</div>
+                    </div>
+                `;
+                    container.appendChild(el);
+                });
+            }
+
+            function selectTour(id, tour) {
+                selectedTourId = id;
+                selectedTourData = tour;
+
+                // Refresh to show selection state
+                // Re-apply filters to keep current view
+                applyFilters();
+            }
+
+            // 5. FILTER LOGIC
+            function applyFilters() {
+                const lvl =
+                    document.getElementById("filter-level")
+                        .value;
+                const dur =
+                    document.getElementById("filter-duration")
+                        .value;
+                const maxPrice = parseInt(
+                    document.getElementById("filter-price")
+                        .value,
+                );
+
+                const filtered = allTours.filter((t) => {
+                    const matchLvl = lvl === "all" ||
+                        t.level == lvl;
+                    const matchDur = dur === "all" ||
+                        t.days == dur;
+                    const matchPrice = t.price <= maxPrice;
+                    return matchLvl && matchDur && matchPrice;
+                });
+                renderTours(filtered);
+            }
+
+            // 6. FORM LOGIC
+            function addTravelerForm() {
+                const container = document.getElementById(
+                    "travelers-list",
+                );
+                const index = container.children.length + 1;
+
+                const div = document.createElement("div");
+                div.className = "traveler-card";
+                div.innerHTML = `
+                <div class="traveler-header">
+                    <span class="traveler-title">Hành khách ${index}</span>
+                    ${
+                    index > 1
+                        ? '<span class="remove-traveler" onclick="this.parentElement.parentElement.remove()">Xóa</span>'
+                        : ""
+                }
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày sinh</label>
+                        <input type="date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" class="form-control" required>
+                    </div>
+                </div>
+            `;
+                container.appendChild(div);
+            }
+
+            // 7. STEP NAVIGATION
+            function changeStep(n) {
+                // Validation Step 1
+                if (currentStep === 1 && n === 1) {
+                    if (!selectedTourId) {
+                        alert(
+                            "Vui lòng chọn một tour để tiếp tục!",
+                        );
+                        return;
+                    }
+                }
+
+                // Validation Step 2
+                if (currentStep === 2 && n === 1) {
+                    const inputs = document.querySelectorAll(
+                        "#step-2 input",
+                    );
+                    for (let i = 0; i < inputs.length; i++) {
+                        if (!inputs[i].value) {
+                            alert(
+                                "Vui lòng điền đầy đủ thông tin hành khách!",
+                            );
+                            return;
+                        }
+                    }
+                    updateSummary();
+                }
+
+                // Change UI
+                document.getElementById(`step-${currentStep}`)
+                    .classList.remove("active");
+                document.getElementById(
+                    `step-ind-${currentStep}`,
+                ).classList.remove("active");
+                if (n === 1) {
+                    document.getElementById(
+                        `step-ind-${currentStep}`,
+                    ).classList.add("completed");
+                }
+
+                currentStep += n;
+
+                document.getElementById(`step-${currentStep}`)
+                    .classList.add("active");
+                document.getElementById(
+                    `step-ind-${currentStep}`,
+                ).classList.add("active");
+
+                // Button visibility
+                document.getElementById("btn-prev").style
+                    .visibility = currentStep === 1
+                        ? "hidden"
+                        : "visible";
+                document.getElementById("btn-next").style
+                    .display = currentStep === 3
+                        ? "none"
+                        : "block";
+            }
+
+            function updateSummary() {
+                const count =
+                    document.getElementById("travelers-list")
+                        .children.length;
+                const total = selectedTourData.price * count;
+
+                document.getElementById("sum-tour-name")
+                    .innerText = selectedTourData.name;
+                document.getElementById("sum-date").innerText =
+                    document.getElementById("filter-date")
+                        .value || "Chưa chọn";
+                document.getElementById("sum-pax").innerText =
+                    count + " người";
+                document.getElementById("sum-price").innerText =
+                    selectedTourData.price.toLocaleString() +
+                    " VNĐ";
+                document.getElementById("sum-total").innerText =
+                    total.toLocaleString() + " VNĐ";
+            }
+
+            function finishBooking() {
+                alert(
+                    "Đặt tour thành công! Cảm ơn bạn đã chọn Oxalis.",
+                );
+                window.location.href = "index.html";
+            }
+        </script>
+    </body>
+</html>
