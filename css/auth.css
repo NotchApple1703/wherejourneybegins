@@ -1,4 +1,4 @@
-/* --- LOGIN / AUTH SYSTEM SHARED STYLES --- */
+/* AUTH STYLES */
 
 /* Auth Button in Navbar */
 .nav-right {
@@ -6,6 +6,7 @@
     align-items: center;
     gap: 15px;
 }
+
 .auth-btn {
     width: 40px;
     height: 40px;
@@ -17,23 +18,27 @@
     background: #ccc;
     transition: transform 0.2s, border-color 0.3s;
     position: relative;
-    display: flex; /* Ensure image centers */
+    display: flex;
+    /* Ensure image centers */
     justify-content: center;
     align-items: center;
 }
+
 .auth-btn:hover {
     transform: scale(1.1);
 }
+
 .navbar.scrolled .auth-btn {
     border-color: #222;
 }
+
 .auth-btn img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* AUTH MODAL OVERLAY */
+/* Modal Overlay */
 .auth-modal {
     position: fixed;
     top: 0;
@@ -50,35 +55,41 @@
     visibility: hidden;
     transition: all 0.3s ease;
 }
+
 .auth-modal.active {
     opacity: 1;
     visibility: visible;
 }
 
-/* MODAL BOX */
+/* Modal Box */
 .auth-box {
     background: #fff;
     width: 90%;
-    max-width: 400px; /* Default for login */
+    max-width: 400px;
+    /* Default for login */
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
     position: relative;
     max-height: 90vh;
     overflow-y: auto;
-    font-family: "Montserrat", sans-serif; /* Ensure font consistency */
-}
-.auth-box.wide {
-    max-width: 800px; /* Wider for Info Table */
+    font-family: "Montserrat", sans-serif;
+    /* Ensure font consistency */
 }
 
-/* HEADER */
+.auth-box.wide {
+    max-width: 800px;
+    /* Wider for Info Table */
+}
+
+/* Header */
 .auth-header {
     background: #f8f9fa;
     padding: 20px;
     text-align: center;
     border-bottom: 1px solid #eee;
 }
+
 .auth-header h2 {
     margin: 0;
     font-size: 1.5rem;
@@ -86,10 +97,11 @@
     font-weight: 700;
 }
 
-/* BODY & FORMS */
+/* Forms */
 .auth-body {
     padding: 30px;
 }
+
 .close-auth {
     position: absolute;
     top: 15px;
@@ -100,11 +112,15 @@
     transition: color 0.3s;
     z-index: 10;
 }
-.close-auth:hover { color: #333; }
+
+.close-auth:hover {
+    color: #333;
+}
 
 .form-group {
     margin-bottom: 20px;
 }
+
 .form-group label {
     display: block;
     margin-bottom: 8px;
@@ -112,7 +128,9 @@
     font-size: 0.9rem;
     color: #555;
 }
-.form-group input, .form-group select {
+
+.form-group input,
+.form-group select {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
@@ -120,14 +138,17 @@
     font-size: 1rem;
     font-family: inherit;
     transition: border-color 0.3s;
-    box-sizing: border-box; /* Fix padding issues */
+    box-sizing: border-box;
+    /* Fix padding issues */
 }
-.form-group input:focus, .form-group select:focus {
+
+.form-group input:focus,
+.form-group select:focus {
     border-color: #333;
     outline: none;
 }
 
-/* BUTTONS */
+/* Buttons */
 .auth-submit-btn {
     width: 100%;
     padding: 12px;
@@ -141,17 +162,19 @@
     cursor: pointer;
     transition: background 0.3s;
 }
+
 .auth-submit-btn:hover {
     background: #000;
 }
 
-/* LINKS */
+/* Links */
 .auth-links {
     margin-top: 15px;
     text-align: center;
     font-size: 0.85rem;
     color: #666;
 }
+
 .auth-links span {
     cursor: pointer;
     color: #333;
@@ -159,23 +182,37 @@
     text-decoration: underline;
 }
 
-/* TABLES (For Account Page) */
+/* Tables */
 .user-info-section {
     padding: 20px;
 }
-.user-info-table, .trips-table {
+
+.user-info-table,
+.trips-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
-.user-info-table th, .trips-table th, 
-.user-info-table td, .trips-table td {
+
+.user-info-table th,
+.trips-table th,
+.user-info-table td,
+.trips-table td {
     padding: 12px;
     border-bottom: 1px solid #eee;
     text-align: left;
 }
-.user-info-table th { width: 30%; color: #888; font-weight: 500; }
-.user-info-table td { font-weight: 600; color: #333; }
+
+.user-info-table th {
+    width: 30%;
+    color: #888;
+    font-weight: 500;
+}
+
+.user-info-table td {
+    font-weight: 600;
+    color: #333;
+}
 
 .section-title {
     font-size: 1.1rem;
@@ -185,8 +222,12 @@
     border-left: 4px solid #333;
     padding-left: 10px;
 }
+
 .logout-btn {
     background: #d9534f;
     margin-top: 10px;
 }
-.logout-btn:hover { background: #c9302c; }
+
+.logout-btn:hover {
+    background: #c9302c;
+}

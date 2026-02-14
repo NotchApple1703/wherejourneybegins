@@ -39,7 +39,7 @@
                 list-style: none;
             }
 
-            /* --- NAVBAR (Frosted Glass & Light Theme) --- */
+            /* --- NAVBAR --- */
             .navbar {
                 position: fixed;
                 top: 0;
@@ -50,7 +50,6 @@
                 align-items: center;
                 padding: 30px 50px;
                 z-index: 1000;
-                /* Frosted Effect */
                 background: rgba(0, 0, 0, 0.4);
                 backdrop-filter: blur(4px);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -65,9 +64,9 @@
 
             /* Logo Image Button */
             .nav-logo-img {
-                width: 120px; /* Adjust size as needed */
+                width: 120px;
                 height: auto;
-                display: block; /* Remove extra space below image */
+                display: block;
             }
 
             .nav-menu {
@@ -82,15 +81,12 @@
                 text-transform: uppercase;
                 cursor: pointer;
                 padding: 10px 0;
-                color: #fff;;
+                color: #fff;
             }
 
-            /* Switch colors on scroll */
             .navbar.scrolled .nav-logo-img, .navbar.scrolled .nav-item {
-                filter: invert(0%); /* Ensure original logo color if needed, or adjust */
-                color: #222; /* For text menu items */
+                color: #222;
             }
-            /* If you want logo to become black when scrolled: */
             /* .navbar.scrolled .nav-logo { filter: invert(100%); } */
 
             .nav-item::after {
@@ -110,7 +106,7 @@
                 width: 100%;
             }
 
-            /* Dropdown (Light Theme) */
+            /* Dropdown */
             .dropdown {
                 position: absolute;
                 top: 100%;
@@ -233,7 +229,7 @@
                 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
             }
 
-            /* --- RIGHT SIDE (45%) - ADAPTED CSS --- */
+            /* --- RIGHT SIDE --- */
             .accordion-container {
                 flex-basis: 45%; /* Use flex-basis instead of width for layout safety */
                 height: 100%;
@@ -332,11 +328,10 @@
                 white-space: nowrap;
                 text-transform: uppercase;
 
-                /* Adapted: Smaller and Always White */
-                font-size: 2rem; /* Small */
+                font-size: 2rem;
                 font-weight: 700;
                 letter-spacing: 4px;
-                color: #ffffff; /* Always White */
+                color: #ffffff;
 
                 opacity: 1;
                 transition: opacity 0.4s ease;
@@ -472,7 +467,7 @@
                 <li class="nav-item">
                     Hữu ích
                     <ul class="dropdown">
-                        <!-- LINK TO NEW GUIDE FILE -->
+
                         <li><a href="guide.html">Hướng dẫn đi, đến Phong Nha</a></li>
                         <li><a href="faqs.html">Giải đáp thắc mắc</a></li>
                         <li><a href="contact.html">Thông tin liên hệ</a></li>

@@ -9,7 +9,6 @@ const AUTH_STATE = {
     users: JSON.parse(localStorage.getItem("users")) || [],
 };
 
-// --- DOM ELEMENTS (populated after injectAuthModal) ---
 let authModal, authBox, authTitle, authBody, closeAuthBtn;
 
 const TEMPLATES = {
@@ -80,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function checkRestrictedAccess() {
-    // If on account page but not logged in, redirect
     if (window.location.pathname.includes("account.html") && !AUTH_STATE.currentUser) {
         window.location.href = "index.html";
         setTimeout(() => alert("Vui lòng đăng nhập để xem thông tin tài khoản."), 500);
@@ -90,7 +88,6 @@ function checkRestrictedAccess() {
 // --- CORE FUNCTIONS ---
 
 function injectAuthModal() {
-    // Don't inject if already exists (prevent duplicates)
     if (document.getElementById("authModal")) {
         bindModalElements();
         return;
@@ -131,20 +128,16 @@ function initAuthButton() {
 
     if (!authBtn || !authAvatar) return;
 
-    // Update Avatar based on state
     if (AUTH_STATE.currentUser) {
         authAvatar.src = `https://ui-avatars.com/api/?name=${AUTH_STATE.currentUser.name}&background=0D8ABC&color=fff`;
     } else {
         authAvatar.src = "https://ui-avatars.com/api/?name=User&background=random";
     }
 
-    // Click Event
     authBtn.addEventListener("click", () => {
         if (AUTH_STATE.currentUser) {
-            // Redirect to Account Page
             window.location.href = "account.html";
         } else {
-            // Open Login Modal
             renderLogin();
             openModal();
         }
@@ -220,17 +213,7 @@ function loginUser(user) {
     AUTH_STATE.currentUser = user;
     localStorage.setItem("currentUser", JSON.stringify(user));
 
-    // Update UI
-    const authAvatar = document.getElementById("authAvatar");
-    if (authAvatar) {
-        authAvatar.src = `https://ui-avatars.com/api/?name=${user.name}&background=0D8ABC&color=fff`;
-    }
-
     closeModal();
-
-    // Redirect if on account page? No, just stay or refresh?
-    // If we were logging in to access account page, user probably wants to go there.
-    // For now, just close modal. User can click avatar again to go to account page.
 }
 
 function logout() {

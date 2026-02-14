@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="css/auth.css">
 
         <style>
-            /* --- GLOBAL RESET & SHARED STYLES --- */
+            /* Global Styles */
             * {
                 margin: 0;
                 padding: 0;
@@ -44,7 +44,7 @@
                 list-style: none;
             }
 
-            /* --- NAVBAR --- */
+            /* Navbar */
             .navbar {
                 position: fixed;
                 top: 0;
@@ -175,7 +175,7 @@
                 color: #fff;
             }
 
-            /* --- HERO SECTION --- */
+            /* Hero */
             .page-hero {
                 position: relative;
                 height: 60vh;
@@ -205,7 +205,7 @@
                 padding: 0 20px;
             }
 
-            /* --- EQUIPMENT GRID LAYOUT --- */
+            /* Layout */
             .equipment-container {
                 max-width: 1400px;
                 margin: 0 auto;
@@ -349,7 +349,7 @@
                 visibility: visible;
             }
 
-            /* --- FOOTER --- */
+            /* Footer */
             .site-footer {
                 background-color: #faf8f5;
                 padding: 60px 0;
@@ -735,17 +735,14 @@
                 grid.appendChild(card);
             });
 
-            // Click-to-Zoom Logic
-            // Modal Logic
+            /* Modal Logic */
             const modal = document.getElementById("equipmentModal");
             const modalContent = modal.querySelector(".modal-content");
             const allCards = document.querySelectorAll(".equipment-card");
 
             allCards.forEach((card) => {
                 card.addEventListener("click", () => {
-                    // 1. Clone content or get data
-                    // Since we constructed it, we can just grab HTML for simplicity
-                    // or reconstruct it to look nicer in modal
+
                     const imageHTML = card.querySelector(".card-image").outerHTML;
                     const infoHTML = card.querySelector(".card-info").innerHTML;
 
@@ -756,7 +753,7 @@
                         </div>
                     `;
 
-                    // 2. Show Modal & Overlay
+
                     modal.classList.add("active");
                     overlay.classList.add("active");
                 });
@@ -768,25 +765,21 @@
                 overlay.classList.remove("active");
             });
 
-            // --- SCROLL ANIMATION (WAVE EFFECT) ---
+            /* Scroll Animation */
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: "0px 0px -50px 0px"
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
-                // Filter only intersecting entries
+
                 const intersectingEntries = entries.filter(e => e.isIntersecting);
-                
-                // Sort by DOM order to ensure left-to-right wave
-                // (Note: entries are usually in order, but good to be safe if browser differs)
                 intersectingEntries.sort((a, b) => {
                     return Array.from(a.target.parentNode.children).indexOf(a.target) - 
                            Array.from(b.target.parentNode.children).indexOf(b.target);
                 });
-
                 intersectingEntries.forEach((entry, index) => {
-                    // Stagger: 150ms delay per item in the batch
+                    /* Stagger delay */
                     setTimeout(() => {
                         entry.target.classList.add("visible");
                     }, index * 150);

@@ -1,4 +1,4 @@
-/* ===== CAVE DETAIL PAGE SHARED STYLES ===== */
+/* CAVE DETAILS */
 
 /* --- GLOBAL RESET --- */
 * {
@@ -33,7 +33,7 @@ ul {
     list-style: none;
 }
 
-/* --- NAVBAR --- */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -180,7 +180,7 @@ ul {
     color: #fff;
 }
 
-/* --- HERO SECTION --- */
+/* Hero Section */
 .cave-hero {
     position: relative;
     height: 75vh;
@@ -225,7 +225,7 @@ ul {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
-/* --- MAIN LAYOUT --- */
+/* Layout */
 .cave-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -275,7 +275,7 @@ ul {
     border-left: 4px solid #000;
 }
 
-/* --- CONTENT --- */
+/* Content Section */
 .content-section {
     margin-bottom: 60px;
 }
@@ -493,7 +493,7 @@ ul {
     text-align: center;
 }
 
-/* --- FOOTER --- */
+/* Footer */
 .site-footer {
     background-color: #faf8f5;
     padding: 60px 0;
@@ -529,7 +529,7 @@ ul {
     line-height: 1.6;
 }
 
-/* --- RESPONSIVE --- */
+/* Responsive */
 @media (max-width: 900px) {
     .cave-container {
         grid-template-columns: 1fr;
