@@ -1168,7 +1168,23 @@
                     </div>
                     <div class="form-group">
                         <label>Số điện thoại</label>
-                        <input type="tel" class="form-control" required>
+                        <input type="tel" class="form-control" required pattern="^0\d{9}$" title="Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số">
+                    </div>
+                    <div class="form-group">
+                        <label>Chiều cao (cm)</label>
+                        <input type="number" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cân nặng (kg)</label>
+                        <input type="number" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Chiều dài bàn chân (cm)</label>
+                        <input type="number" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Vòng eo (cm)</label>
+                        <input type="number" class="form-control" required>
                     </div>
                 </div>
             `;

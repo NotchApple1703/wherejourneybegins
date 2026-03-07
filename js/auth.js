@@ -197,6 +197,20 @@ function renderRegister() {
             password: document.getElementById("regPass").value
         };
 
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(newUser.email)) {
+            alert("Email không hợp lệ!");
+            return;
+        }
+
+        // Validate phone number format
+        const phoneRegex = /^0\d{9}$/;
+        if (!phoneRegex.test(newUser.phone)) {
+            alert("Số điện thoại không hợp lệ! Phải bắt đầu bằng 0 và có 10 chữ số.");
+            return;
+        }
+
         if (AUTH_STATE.users.some(u => u.email === newUser.email)) {
             alert("Email đã tồn tại!");
             return;
